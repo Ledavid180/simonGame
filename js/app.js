@@ -62,7 +62,7 @@ function nextRound(){
     //the unclickable class is added to the tile container when the round starts, and the contents of the info and heading elements are updated.
     tileContainer.classList.add('unclickable');
     info.textContent = 'Wait for the computer';
-    heading.textContent = `Level ${level} of 20`;
+    heading.textContent = `Level ${level} of 35`;
 
     //line below copies all of the elements in the 'sequence' array to the 'nextSequence' varaible
     const nextSequence = [...sequence];
@@ -93,6 +93,10 @@ function handleClick(tile){
     }
     //code below compares the length of the humanSequence array to sequence array. If they're equal, it means that the round is over and the next round can begin. At that point, the humanSeqeunce array is reset and the nextRound() function is called after one second. The delay is to allow the user to see the success message, otherwise, it will not appear at all because it will get overwritten immediately.
     if(humanSequence.length === sequence.length) {
+        if(humanSequence.length === 35) {
+            resetGame('Congrats! You WIN!');
+            return;
+        }
         humanSequence = [];
         info.textContent = 'Success! Keep Going!';
         setTimeout(() => {
@@ -117,6 +121,6 @@ startBtn.addEventListener('click', startGame);
 //to detect the player's button taps and decide whether to move to the next round or end the game.
 tileContainer.addEventListener('click', event => {
     const { tile } = event.target.dataset;
-    if (tile) hadleClick(tile);
+    if (tile) handleClick(tile);
     //the value of data-tile on the element that was clicked is accessed and stored in the tile varaible. If the value is not an empty string(for elements without the data-tile attribute), the handleClick() function is executed with the tile value as its only argument.
 })
